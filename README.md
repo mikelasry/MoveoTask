@@ -38,7 +38,7 @@
   Updating the data after view load causes Angular Error (NG0100: Expression has changed after it was checked).
   Due to short deadline, this issue was patched with page "reload" by paging next page, then previouse one, and can be fixed upon request.
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@ The following are the task instructions by Moveo: @@@@@@@@@@@@@@@@@@@@@@@@@@@
+## The following are the task instructions by Moveo: 
 
   Create a page with a title “All users” with a table of users which will contain the following columns:
   - Picture (circled icon)
@@ -70,4 +70,3 @@
   1. An overall description of the assignment in English (no more than 1 page).
   2. Upload your code to GitHub and attach a link to your GitHub repository.
   3. Supply a URL link of your project deployment (deploy it to one of the hosting services).
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

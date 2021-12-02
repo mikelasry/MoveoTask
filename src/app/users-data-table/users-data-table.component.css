@@ -6,3 +6,17 @@
   width:80%;
   margin: 20px auto;
 }
+
+img{
+  border-radius:100px; 
+  border:2px solid black; 
+  width: 75px; 
+  height: 75px;
+}
+
+.container{
+  display: flex; 
+  justify-content: center; 
+  text-align: center; 
+  margin: 5px;
+}

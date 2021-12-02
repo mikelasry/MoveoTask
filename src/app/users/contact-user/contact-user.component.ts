@@ -9,6 +9,7 @@ import { take } from 'rxjs/operators';
 import { environment } from './../../../../src/environments/environment';
 import { UserService } from './../../users/user.service'
 
+
 export class Email {
   host: string;
   username: string;
@@ -41,30 +42,58 @@ export class ContactUserComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private _ngZone: NgZone) { }
 
-  @ViewChild('autosize') autosize!: CdkTextareaAutosize;
-
 
   ngOnInit(): void {
+    this.currentUser = this.newDefaultUser();
     this.activatedRoute.paramMap.subscribe(
       params => {
         let username = params.get('username');
-        this.currentUser = this.userService.getUserByUsername(username);
-        this.emailModel = new Email(this.currentUser);
+        this.userService.fetchUsersData().subscribe(data => {
+          this.currentUser = this.userService.getUserByUsername(username!, data.results);
+          this.emailModel = new Email(this.currentUser);
+        });
       });
   }
 
-
-  triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
-    this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
+  newDefaultUser(): User {
+    return {
+      username: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      age: 0,
+      gender: "",
+      img: "",
+      address: "",
+      lat: 0,
+      lng: 0,
+      getInitials: () => { return this.currentUser.firstName[0] + this.currentUser.lastName[0]; }
+    }
   }
 
-  
-  onSubmit(f: NgForm) {
+  onSubmit(form: NgForm) {
+
+    if (!form.valid) {
+      alert("Both subject and email body reuired!");
+      return;
+    }
 
     // npm install & use smtp-client to send email
     // $ npm install --save smtp-client
     // docs at: https://www.npmjs.com/package/smtp-client
-    alert("email sent");
+
+    this.dclareEmailSent(form);
+    this.clearInputs(form)
+  }
+  
+  private dclareEmailSent(form: NgForm) {
+    alert(`${form.value.body.trim()}
+      \nSent to: ${this.currentUser.email}
+      \nAbout: ${form.value.subject.trim()}`
+    );
+  }
+
+  private clearInputs(form: NgForm) {
+    form.reset();
   }
 }

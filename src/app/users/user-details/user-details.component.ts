@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser } from 'src/app/users-data-table/users-data-table-datasource';
 import { User } from 'src/app/models/user';
 import { UserService } from '../user.service';
 import { ActivatedRoute } from '@angular/router';
 
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-user-details',
@@ -14,20 +14,22 @@ import { environment } from 'src/environments/environment';
 })
 export class UserDetailsComponent implements OnInit {
   public currentUser!: User;
-  public userPictureUrl: string | undefined;
 
-  lat = 51.678418;
-  lng = 7.809007;
-
-  constructor(private userService: UserService,
-    private activatedRoute: ActivatedRoute) { }
+  constructor(
+      private userService: UserService, 
+      private activatedRoute: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       let username = params.get('username');
-      this.currentUser = this.userService.getUserByUsername(username);
-      this.userPictureUrl = this.currentUser.img.replace("/med", "");
-      this.loadMap(this.newLoader());
+      if(username == null) return;
+
+      this. userService.fetchUsersData().subscribe(data =>{
+        this.currentUser = this.userService.getUserByUsername(username!, data.results);
+        this.currentUser.img = this.currentUser.img.replace("/med", "");
+        this.loadMap(this.newLoader());
+      })
     });
   }
 
@@ -39,20 +41,27 @@ export class UserDetailsComponent implements OnInit {
   }
 
   private loadMap(loader: Loader) {
-    loader.load().then(() => {
-      
+    console.log("loading map........");
+    loader.load().then(() => {      
+      var lat_lng_pair = new google.maps.LatLng(this.currentUser.lat, this.currentUser.lng);
+      let lat = lat_lng_pair.lat();
+      let lng = lat_lng_pair.lng();
       const map = new google.maps.Map(
         document.getElementById("map")!, {
           center: { 
-            lat: this.lat, 
-            lng: this.lng 
+            lat:  lat, 
+            lng:  lng, 
           }, zoom: 8,
         });
-
+        
+        
+        console.log("user:");
+        console.log(this.currentUser);
       const marker = new google.maps.Marker({
-        position: { lat: this.lat, lng: this.lng },
+        position: { lat: lat, lng: lng},
       }); marker.setMap(map);
 
     });
   }
+
 }

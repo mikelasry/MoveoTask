@@ -1,16 +1,22 @@
-<div style="display: flex; justify-content: center; text-align: center; margin: 5px;">
+<div class="container">
     <div style="width:50%;">
         <h1>User Details</h1>
-        <button mat-raised-button color="accent" [routerLink]="['']" style="margin:10px;">All Users</button>
+        <button mat-raised-button color="accent" 
+            [routerLink]="['']" style="margin:10px;">All Users</button>
         <hr>
-        <br/>
-        <img *ngIf="userPictureUrl!=undefined" [src]="userPictureUrl" style="border:5px solid black; border-radius:100px;"/>
-        <h4 *ngIf="currentUser!=undefined">{{currentUser.firstName[0]}}{{currentUser.lastName[0]}}</h4>
-        <h3><a [routerLink]="['/contact/', currentUser.username]">{{currentUser.email}}</a></h3>
-        <h3>{{currentUser.gender}}</h3>
-        <h3>Age: {{currentUser.age}}</h3>
+        <br />
+        <img *ngIf="currentUser!=undefined" [src]="currentUser.img"/>
+        <h4 *ngIf="currentUser!=undefined">{{currentUser.getInitials()}}</h4>
+        <h3>
+            <a *ngIf="currentUser!=undefined" 
+                [routerLink]="['/contact/', currentUser.username]">
+                    {{currentUser.email}}
+            </a>
+        </h3>
+        <h3 *ngIf="currentUser!=undefined">{{currentUser.gender}}</h3>
+        <h3 *ngIf="currentUser!=undefined">Age: {{currentUser.age}}</h3>
         <hr>
-        <br/>
+        <br />
         <div style="display: flex; justify-content: center;">
             <div id="map"></div>
         </div>

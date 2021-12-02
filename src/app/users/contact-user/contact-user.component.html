@@ -1,36 +1,40 @@
-<div style="display: flex; justify-content: center; text-align: center; margin: 5px;">
+<div class="container">
   <div style="width:70%;">
-    <h1>Contact <a [routerLink]="['/details/', currentUser.username]">{{currentUser.username}}</a></h1>
-    <img [src]="currentUser.img" style="border-radius: 100px; border:5px solid black" />
+    <h1>
+      Contact 
+      <a [routerLink]="['/details/', currentUser.username]">
+        {{currentUser.username}}
+      </a>
+    </h1>
+    <img [src]="currentUser.img"  />
     <br />
-    
-    
-    <h4 *ngIf="currentUser!=undefined">{{currentUser.firstName[0]}}{{currentUser.lastName[0]}}</h4>
-    <cite>To: &nbsp; &nbsp; </cite> <span><b>{{currentUser.email}}</b></span>
+    <h4 *ngIf="currentUser!=undefined">
+      {{currentUser.getInitials()}}
+    </h4>
+    <cite>To: &nbsp; &nbsp; </cite> 
+    <span><b>{{currentUser.email}}</b></span>
     <hr>
     <br />
-    <div style="display: flex; justify-content: center;">
-
-
-      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-        
+    <div class="container">
+      <form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
         <p>
           <mat-form-field appearance="legacy">
-            <input matInput name="subject" ngModel required placeholder="Subject" #subject="ngModel" style=" width:100%; display: flex; text-align:center;"><br/>
+            <input matInput name="subject" 
+              ngModel required placeholder="Subject" 
+              #subject="ngModel" />
+            <br/>
           </mat-form-field>
-     <br>
-     
+          <br>
           <mat-form-field appearance="legacy">
-            <input matInput name="body" ngModel required placeholder="Email Body" #body="ngModel" style=" width:100%; display: flex; text-align:center;"><br/>
+            <input matInput name="body" 
+            ngModel required placeholder="Email Body" 
+            #body="ngModel" />
           </mat-form-field>
+          <br/>
         </p>
-
-        <button mat-raised-button color="primary" type="submit" style="margin:5px;">SEND</button>
+        <button mat-raised-button color="primary" type="submit">SEND</button>
       </form>
-
-
-
     </div>
-    <button mat-raised-button color="accent" [routerLink]="['']" style="margin:10px;">All Users</button>
+    <button mat-raised-button color="accent" [routerLink]="['']" >All Users</button>
   </div>
 </div>

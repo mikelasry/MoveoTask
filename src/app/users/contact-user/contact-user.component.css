@@ -1,0 +1,23 @@
+img{
+    border-radius: 100px; 
+    border:5px solid black; 
+    width: 138px; 
+    height: 138px;
+}
+
+input{
+    display: flex; 
+    text-align:center;
+    width:100%; 
+}
+
+button{
+    margin:5px;
+}
+
+.container{
+    display: flex; 
+    justify-content: center; 
+    text-align: center; 
+    margin: 5px;
+}
